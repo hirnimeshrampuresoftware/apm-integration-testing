@@ -9,7 +9,7 @@ import groovy.transform.Field
 @Field def itsDownstreamJobs = [:]
 
 pipeline {
-  agent { label 'linux && immutable' }
+  agent { label 'linux' }
   environment {
     BASE_DIR = 'src/github.com/hirnimeshrampuresoftware/apm-integration-testing'
     NOTIFY_TO = credentials('notify-to')
