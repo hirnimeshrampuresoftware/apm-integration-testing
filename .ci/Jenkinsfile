@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('apm@current')
+@Library('apm@current') _
 
 import groovy.transform.Field
 
