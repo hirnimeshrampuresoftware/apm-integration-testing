@@ -12,8 +12,10 @@ pipeline {
   agent { label 'linux && immutable' }
   environment {
     BASE_DIR = 'src/github.com/hirnimeshrampuresoftware/apm-integration-testing'
+   /**
     NOTIFY_TO = credentials('notify-to')
     JOB_GCS_BUCKET = credentials('gcs-bucket')
+    */
     PIPELINE_LOG_LEVEL='INFO'
     GIT_REFERENCE_REPO = '/var/lib/jenkins/.git-references/apm-integration-testing.git'
     ELASTIC_STACK_VERSION = "${ params?.ELASTIC_STACK_VERSION?.trim() ? params.ELASTIC_STACK_VERSION.trim() : stackVersions.edge() }"
