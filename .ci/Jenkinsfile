@@ -106,7 +106,8 @@ pipeline {
             }
           }
         }
-       
+      }
+    }  
         stage('Sanity checks') {
           agent { label 'linux && immutable' }
           options { skipDefaultCheckout() }
@@ -194,6 +195,4 @@ def runJob(testName, buildOpts = ''){
   if (buildObject.resultIsWorseOrEqualTo('UNSTABLE')) {
     error("Downstream job for '${testName}' failed")
   }
-}
-}
 }
