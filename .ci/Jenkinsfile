@@ -9,7 +9,7 @@ import groovy.transform.Field
 @Field def itsDownstreamJobs = [:]
 
 pipeline {
-  agent { label 'arm' }
+  agent { label 'linux' }
   environment {
     BASE_DIR = 'src/github.com/hirnimeshrampuresoftware/apm-integration-testing'
     NOTIFY_TO = credentials('notify-to')
@@ -84,7 +84,7 @@ pipeline {
           }
         }        
        stage('Sanity checks') {
-          agent { label 'linux && immutable' }
+          agent { label 'linux' }
           options { skipDefaultCheckout() }
           steps {
             withGithubNotify(context: 'Sanity checks', tab: 'tests') {
