@@ -11,7 +11,7 @@ import groovy.transform.Field
 pipeline {
   agent { label 'linux' }
   environment {
-    BASE_DIR = 'src/github.com/hirnimeshrampuresoftware/apm-integration-testing'
+    BASE_DIR = 'github.com/hirnimeshrampuresoftware/apm-integration-testing'
     NOTIFY_TO = credentials('notify-to')
     JOB_GCS_BUCKET = credentials('gcs-bucket')
     PIPELINE_LOG_LEVEL='INFO'
