@@ -88,10 +88,7 @@ pipeline {
       agent { label 'arm' }
       parallel {
         stage('Unit Tests - linux/arm64'){
-          agent { label 'arm' }
-          options { skipDefaultCheckout()
-                    warnError('ARM execution failed')
-           }
+          options { skipDefaultCheckout() }
           steps {
             withGithubNotify(context: 'Unit Tests - linux/arm64', tab: 'tests') {
               deleteDir()
