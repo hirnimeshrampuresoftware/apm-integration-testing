@@ -195,3 +195,4 @@ def runJob(testName, buildOpts = ''){
     error("Downstream job for '${testName}' failed")
   }
 }
+}
