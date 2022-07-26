@@ -9,7 +9,7 @@ import groovy.transform.Field
 @Field def itsDownstreamJobs = [:]
 
 pipeline {
-  agent { label 'linux' }
+  agent { label 'arm' }
   environment {
     BASE_DIR = 'src/github.com/hirnimeshrampuresoftware/apm-integration-testing'
     NOTIFY_TO = credentials('notify-to')
@@ -27,9 +27,7 @@ pipeline {
   options {
     timeout(time: 3, unit: 'HOURS')
     timestamps()
-   /*
     ansiColor('xterm')
-    */
     disableResume()
     durabilityHint('PERFORMANCE_OPTIMIZED')
     rateLimitBuilds(throttle: [count: 60, durationName: 'hour', userBoost: true])
@@ -63,16 +61,17 @@ pipeline {
         }
       }
     }
-    stage('Tests'){
+    stage('Tests - linux/arm64'){
+      agent { label 'arm' }
       parallel {
-        stage('Unit Tests'){
+        stage('Unit Tests - linux/arm64'){
           options { skipDefaultCheckout() }
           steps {
-            withGithubNotify(context: 'Unit Tests', tab: 'tests') {
+            withGithubNotify(context: 'Unit Tests - linux/arm64', tab: 'tests') {
               deleteDir()
               unstash 'source'
               dir("${BASE_DIR}"){
-                sh(label: 'unit tests', script: '.ci/scripts/unit-tests.sh')
+                sh(label: 'ARM64 unit tests', script: '.ci/scripts/unit-tests.sh')
               }
             }
           }
@@ -83,8 +82,7 @@ pipeline {
                 testResults: "${BASE_DIR}/tests/results/*junit.xml")
             }
           }
-        }
-        stage('Sanity checks') {
+        }        stage('Sanity checks') {
           agent { label 'linux && immutable' }
           options { skipDefaultCheckout() }
           steps {
