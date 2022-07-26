@@ -84,6 +84,32 @@ pipeline {
             }
           }
         }
+    stage('Tests - linux/arm64'){
+      agent { label 'arm' }
+      parallel {
+        stage('Unit Tests - linux/arm64'){
+          agent { label 'arm' }
+          options { skipDefaultCheckout()
+                    warnError('ARM execution failed')
+           }
+          steps {
+            withGithubNotify(context: 'Unit Tests - linux/arm64', tab: 'tests') {
+              deleteDir()
+              unstash 'source'
+              dir("${BASE_DIR}"){
+                sh(label: 'ARM64 unit tests', script: '.ci/scripts/unit-tests.sh')
+              }
+            }
+          }
+          post {
+            always {
+              junit(allowEmptyResults: true,
+                keepLongStdio: true,
+                testResults: "${BASE_DIR}/tests/results/*junit.xml")
+            }
+          }
+        }
+       
         stage('Sanity checks') {
           agent { label 'linux && immutable' }
           options { skipDefaultCheckout() }
