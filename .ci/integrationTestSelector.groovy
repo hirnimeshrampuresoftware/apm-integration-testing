@@ -89,7 +89,7 @@ pipeline {
           }
         }
         stage('Opbeans app') {
-          agent { label 'linux && immutable' }
+          agent { label 'linux' }
           options { skipDefaultCheckout() }
           when {
             expression { return (params.INTEGRATION_TEST != 'RUM' &&
