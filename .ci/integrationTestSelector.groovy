@@ -2,9 +2,9 @@
 @Library('apm@current') _
 
 pipeline {
-  agent { label 'linux && immutable' }
+  agent { label 'linux' }
   environment {
-    BASE_DIR="src/github.com/elastic/apm-integration-testing"
+    BASE_DIR="src/github.com/hirnimeshrampuresoftware/apm-integration-testing"
     NOTIFY_TO = credentials('notify-to')
     JOB_GCS_BUCKET = credentials('gcs-bucket')
     JOB_GIT_CREDENTIALS = '2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken'
@@ -114,7 +114,7 @@ pipeline {
           }
         }
         stage('Opbeans RUM app') {
-          agent { label 'linux && immutable' }
+          agent { label 'linux' }
           options { skipDefaultCheckout() }
           when {
             expression { return (params.INTEGRATION_TEST == 'RUM') }
