@@ -39,16 +39,18 @@ pipeline {
     string(name: 'SLACK_CHANNEL', defaultValue: 'observablt-bots', description: 'The Slack channel where errors will be posted')
     booleanParam(name: 'Run_As_Main_Branch', defaultValue: false, description: 'Allow to run any steps on a PR, some steps normally only run on main branch.')
   }
-  stage('Checkout'){
-    steps {
-      deleteDir()
-      gitCheckout(basedir: "${BASE_DIR}",
-                  reference: "${GIT_REFERENCE_REPO}")
-      stash allowEmpty: true, name: 'source', useDefaultExcludes: false
+  stages{
+    /**
+     Checkout the code and stash it, to use it on other stages.
+    */
+    stage('Checkout'){
+      steps {
+        deleteDir()
+        gitCheckout(basedir: "${BASE_DIR}",
+                    reference: "${GIT_REFERENCE_REPO}")
+        stash allowEmpty: true, name: 'source', useDefaultExcludes: false
+      }
     }
-  }
-}
-
 def runJob(testName, buildOpts = ''){
   def mergeTarget = env.CHANGE_ID?.trim() ? env.CHANGE_TARGET : env.BRANCH_NAME
   def jobName = "apm-integration-test-downstream/${env.BRANCH_NAME}"
