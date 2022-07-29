@@ -58,9 +58,87 @@ pipeline {
           }
         }
       }
-    }   
+    }
+    stage('Tests'){
+      parallel {
+        stage('Unit Tests'){
+          options { skipDefaultCheckout() }
+          steps {
+            withGithubNotify(context: 'Unit Tests', tab: 'tests') {
+              deleteDir()
+              unstash 'source'
+              dir("${BASE_DIR}"){
+                sh(label: 'unit tests', script: '.ci/scripts/unit-tests.sh')
+              }
+            }
+          }
+          post {
+            always {
+              junit(allowEmptyResults: true,
+                keepLongStdio: true,
+                testResults: "${BASE_DIR}/tests/results/*junit.xml")
+            }
+          }
+        }
+        stage('Sanity checks') {
+          agent { label 'linux' }
+          options { skipDefaultCheckout() }
+          steps {
+            withGithubNotify(context: 'Sanity checks', tab: 'tests') {
+              deleteDir()
+              unstash 'source'
+              dir("${BASE_DIR}"){
+                preCommit(commit: "${env.GIT_BASE_COMMIT}", junit: true)
+              }
+            }
+          }
+        }
+      }
+    }
+    /**
+      launch integration tests.
+    */
+    stage("Integration Tests") {
+      steps {
+        log(level: 'INFO', text: "Launching Agent tests in parallel")
+        /*
+          Declarative pipeline's parallel stages lose the reference to the downstream job,
+          because of that, I use the parallel step. It is probably a bug.
+          https://issues.jenkins-ci.org/browse/JENKINS-56562
+        */
+        script {
+          def downstreamJobs = [:]
+          if(env?.CHANGE_ID != null
+              && !params.Run_As_Main_Branch
+              && !'/testall'.equalsIgnoreCase(env?.GITHUB_COMMENT)
+          ){
+            downstreamJobs = ['All': {runJob('All')}]
+          } else {
+            downstreamJobs = [
+            'All': {runJob('All')},
+            '.NET': {runJob('.NET')},
+            'Go': {runJob('Go')},
+            'Java': {runJob('Java')},
+            'Node.js': {runJob('Node.js')},
+            'PHP': {runJob('PHP')},
+            'Python': {runJob('Python')},
+            'Ruby': {runJob('Ruby')},
+            'RUM': {runJob('RUM')},
+            'UI': {runJob('UI')}
+            ]
+          }
+          parallel(downstreamJobs)
+        }
+      }
+    }
+  }
+  post {
+    cleanup {
+      notifyBuildResult(downstreamJobs: itsDownstreamJobs, slackComment: true, slackChannel: "#${params.SLACK_CHANNEL}")
+    }
   }
 }
+
 def runJob(testName, buildOpts = ''){
   def mergeTarget = env.CHANGE_ID?.trim() ? env.CHANGE_TARGET : env.BRANCH_NAME
   def jobName = "apm-integration-test-downstream/${env.BRANCH_NAME}"
