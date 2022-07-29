@@ -2,7 +2,7 @@
 @Library('apm@current') _
 
 pipeline {
-  agent { label 'ubuntu-20 && immutable' }
+  agent { label 'linux' }
   environment {
     BASE_DIR="src/github.com/elastic/apm-integration-testing"
     EC_DIR="src/github.com/elastic/observability-test-environments"
@@ -57,7 +57,7 @@ pipeline {
       }
       steps{
         matrix(
-          agent: 'ubuntu-20 && immutable',
+          agent: 'linux',
           axes:[
             axis('STACK_VERSION', readJSON(file: "versions.json"))
           ]
