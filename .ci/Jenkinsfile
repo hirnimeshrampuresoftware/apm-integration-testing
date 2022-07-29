@@ -47,6 +47,7 @@ pipeline {
       stash allowEmpty: true, name: 'source', useDefaultExcludes: false
     }
   }
+}
 
 def runJob(testName, buildOpts = ''){
   def mergeTarget = env.CHANGE_ID?.trim() ? env.CHANGE_TARGET : env.BRANCH_NAME
