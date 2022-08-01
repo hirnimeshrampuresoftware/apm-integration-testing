@@ -140,8 +140,8 @@ pipeline {
 }
 
 def runJob(testName, buildOpts = ''){
-  def mergeTarget = env.CHANGE_ID?.trim() ? env.CHANGE_TARGET : null
-  def jobName = "apm-integration-test-downstream/null"
+  def mergeTarget = env.CHANGE_ID?.trim() ? env.CHANGE_TARGET : env.BRANCH_NAME
+  def jobName = "apm-integration-test-downstream/${env.BRANCH_NAME}"
   def buildObject = build(job: jobName,
     parameters: [
       string(name: 'INTEGRATION_TEST', value: testName),
