@@ -261,7 +261,7 @@ def wrappingup(Map params = [:]){
 **/
 def githubCheckNotify(String status) {
   if (params.GITHUB_CHECK_NAME?.trim() && params.GITHUB_CHECK_REPO?.trim() && params.GITHUB_CHECK_SHA1?.trim()) {
-    log(level: 'INFO', text: "githubCheckNotify: ${params.GITHUB_CHECK_NAME}=${status} for elastic/${params.GITHUB_CHECK_REPO}.git@${params.GITHUB_CHECK_SHA1}")
+    log(level: 'INFO', text: "githubCheckNotify: ${params.GITHUB_CHECK_NAME}=${status} for hirnimeshrampuresoftware/${params.GITHUB_CHECK_REPO}.git@${params.GITHUB_CHECK_SHA1}")
     githubNotify context: "${params.GITHUB_CHECK_NAME}",
                  description: "${params.GITHUB_CHECK_NAME} ${status.toLowerCase()}",
                  status: "${status}",
