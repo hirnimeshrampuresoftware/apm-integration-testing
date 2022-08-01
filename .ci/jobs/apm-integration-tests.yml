@@ -16,9 +16,9 @@
         notification-context: 'apm-ci'
         repo: apm-integration-testing
         repo-owner: hirnimeshrampuresoftware
-        #credentials-id: 2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken
-        #ssh-checkout:
-          #credentials: f6c7695a-671e-4f4f-a331-acdce44ff9ba
+        credentials-id: df4a32df-4aed-4113-a9df-e13515364217
+        ssh-checkout:
+          credentials: df4a32df-4aed-4113-a9df-e13515364217
         build-strategies:
         - tags:
             ignore-tags-older-than: -1
@@ -36,7 +36,7 @@
         submodule:
           disable: false
           recursive: true
-          #parent-credentials: true
+          parent-credentials: true
           timeout: 100
           reference-repo: /var/lib/jenkins/.git-references/apm-integration-testing.git
         timeout: '15'
