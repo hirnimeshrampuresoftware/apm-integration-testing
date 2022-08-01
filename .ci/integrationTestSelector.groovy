@@ -5,11 +5,9 @@ pipeline {
   agent { label 'linux' }
   environment {
     BASE_DIR="src/github.com/hirnimeshrampuresoftware/apm-integration-testing"
-    /*
     NOTIFY_TO = credentials('notify-to')
     JOB_GCS_BUCKET = credentials('gcs-bucket')
-    JOB_GIT_CREDENTIALS = '2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken'
-    */
+    JOB_GIT_CREDENTIALS = 'df4a32df-4aed-4113-a9df-e13515364217'
     PIPELINE_LOG_LEVEL = 'INFO'
     REUSE_CONTAINERS = "true"
     NAME = agentMapping.id(params.INTEGRATION_TEST)
