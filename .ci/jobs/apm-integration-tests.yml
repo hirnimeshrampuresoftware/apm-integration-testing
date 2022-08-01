@@ -36,7 +36,7 @@
         submodule:
           disable: false
           recursive: true
-          parent-credentials: true
+          #parent-credentials: true
           timeout: 100
           reference-repo: /var/lib/jenkins/.git-references/apm-integration-testing.git
         timeout: '15'
