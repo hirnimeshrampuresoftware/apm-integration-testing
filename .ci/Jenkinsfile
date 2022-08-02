@@ -50,7 +50,7 @@ pipeline {
     }
     stage('pwd'){
       steps {
-            pwd()
+            echo 'pwd()'
       }
     }   
     stage('Lint'){
