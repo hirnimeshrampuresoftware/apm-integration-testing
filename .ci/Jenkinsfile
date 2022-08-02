@@ -40,15 +40,14 @@ pipeline {
   stages{
     /**
      Checkout the code and stash it, to use it on other stages.
+    */     
     stage('Checkout'){
       steps {
         deleteDir()
-        gitCheckout(basedir: "${BASE_DIR}",
-                    reference: "${GIT_REFERENCE_REPO}")
+        git branch: 'main', url: 'https://github.com/hirnimeshrampuresoftware/apm-integration-testing'
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
-    */
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
