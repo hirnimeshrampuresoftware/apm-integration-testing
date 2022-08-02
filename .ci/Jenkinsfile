@@ -52,7 +52,7 @@ pipeline {
       options { skipDefaultCheckout() }
       steps {
           dir("${BASE_DIR}"){
-            pwd
+            pwd()
             sh(label: 'lint', script: '.ci/scripts/lint.sh')
         }
       }
