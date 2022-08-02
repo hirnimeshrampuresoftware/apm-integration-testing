@@ -11,7 +11,7 @@ import groovy.transform.Field
 pipeline {
   agent { label 'linux' }
   environment {
-    BASE_DIR = 'src/github.com/hirnimeshrampuresoftware/apm-integration-testing'
+    BASE_DIR = 'https://github.com/hirnimeshrampuresoftware/apm-integration-testing'
     PIPELINE_LOG_LEVEL='INFO'
     GIT_REFERENCE_REPO = '/var/lib/jenkins/.git-references/apm-integration-testing.git'
     ELASTIC_STACK_VERSION = "${ params?.ELASTIC_STACK_VERSION?.trim() ? params.ELASTIC_STACK_VERSION.trim() : stackVersions.edge() }"
@@ -44,7 +44,8 @@ pipeline {
     stage('Checkout'){
       steps {
         deleteDir()
-        git branch: 'main', url: 'https://github.com/hirnimeshrampuresoftware/apm-integration-testing'
+        gitCheckout(basedir: "${BASE_DIR}",
+                    reference: "${GIT_REFERENCE_REPO}")
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
