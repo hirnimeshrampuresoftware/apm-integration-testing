@@ -49,6 +49,7 @@ pipeline {
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
+    */
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
