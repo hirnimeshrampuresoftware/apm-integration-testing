@@ -48,7 +48,7 @@ pipeline {
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
-    stage('Checkout'){
+    stage('pwd'){
       steps {
             pwd()
       }
