@@ -48,12 +48,16 @@ pipeline {
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
+    stage('Checkout'){
+      steps {
+            pwd()
+      }
+    }   
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
           dir("${BASE_DIR}"){
-            pwd()
-            sh(label: 'lint', script: '.ci/scripts/lint.sh')
+            sh(script: '.ci/scripts/lint.sh')
         }
       }
     }
