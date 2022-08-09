@@ -55,13 +55,13 @@ pipeline {
     }
     stage('pwd'){
       steps {
-            echo 'pwd()'
             sh(script: 'cd apm-integration-testing')
       }
     }   
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
+           sh(script: 'ls -a)
            sh(script: '.ci/scripts/lint.sh')
       }
     }
