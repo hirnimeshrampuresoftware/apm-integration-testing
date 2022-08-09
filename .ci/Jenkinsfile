@@ -62,9 +62,7 @@ pipeline {
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
-          dir("${BASE_DIR}"){
-            sh(script: '.ci/scripts/lint.sh')
-        }
+           sh(script: '.ci/scripts/lint.sh')
       }
     }
     stage('Tests'){
