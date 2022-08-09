@@ -71,9 +71,7 @@ pipeline {
           steps {
               deleteDir()
               unstash 'source'
-              dir("${BASE_DIR}"){
-                sh(label: 'unit tests', script: '.ci/scripts/unit-tests.sh')
-            }
+              sh(label: 'unit tests', script: 'cd apm-integration-testing && .ci/scripts/unit-tests.sh')
           }
           post {
             always {
