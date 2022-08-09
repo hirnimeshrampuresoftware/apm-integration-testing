@@ -61,8 +61,7 @@ pipeline {
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
-           sh(script: 'cd apm-integration-testing')
-           sh(script: '.ci/scripts/lint.sh')
+           sh(script: 'cd apm-integration-testing && .ci/scripts/lint.sh')
       }
     }
     stage('Tests'){
