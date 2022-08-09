@@ -61,7 +61,7 @@ pipeline {
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
-           sh(script: 'ls -a)
+           sh(script: 'ls -a')
            sh(script: '.ci/scripts/lint.sh')
       }
     }
