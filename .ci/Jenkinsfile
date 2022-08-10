@@ -44,20 +44,15 @@ pipeline {
     stage('Checkout'){
       steps {
         deleteDir()
+       /**       
         sh(script: 'git clone --recurse-submodules https://github.com/hirnimeshrampuresoftware/apm-integration-testing')
         sh(script: 'ls -a')
-       /**
+           */
         gitCheckout(basedir: "${BASE_DIR}",
                     reference: "${GIT_REFERENCE_REPO}")
-           */
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
-    stage('pwd'){
-      steps {
-            sh(script: 'cd apm-integration-testing')
-      }
-    }   
     stage('Lint'){
       options { skipDefaultCheckout() }
       steps {
