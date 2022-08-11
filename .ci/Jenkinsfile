@@ -49,8 +49,7 @@ pipeline {
         sh(script: 'ls -a')
            */
         gitCheckout(basedir: "${BASE_DIR}",
-                    branch: 'main',
-                    repo: 'git@github.com:hirnimeshrampuresoftware/apm-integration-testing.git',
+                    repo: 'git@github.com:hirnimeshrampuresoftware/apm-pipeline-library.git',
                     reference: "${GIT_REFERENCE_REPO}")
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
